@@ -68,7 +68,7 @@ public class NewsDAO {
 		else if (searchType.equals("title"))
 			statement = "NewsMapper.searchTitle";
 		else if (searchType.equals("writer"))
-			statement = "NewsMapper.selectNewsWriter";
+			statement = "NewsMapper.searchWriter";
 		list = session.selectList(statement, key);
 		return list;
 
