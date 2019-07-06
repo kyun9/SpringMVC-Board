@@ -23,6 +23,35 @@
 	
 	<context:component-scan base-package="edu.spring.springnews" />
 	
+	<context:component-scan base-package="service" />
+	<context:component-scan base-package="dao" />
+	<context:component-scan base-package="vo" />
+
+	<beans:bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<beans:property name="driverClassName"
+			value="oracle.jdbc.OracleDriver" />
+		<beans:property name="url"
+			value="jdbc:oracle:thin:@localhost:1521:XE" />
+		<beans:property name="username" value="jdbctest" />
+		<beans:property name="password" value="jdbctest" />
+	</beans:bean>
+
+	<beans:bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="configLocation"
+			value="classpath:/mybatis-config.xml" />
+		<beans:property name="mapperLocations"
+			value="classpath:/*Mapper.xml" />
+	</beans:bean>
+
+	<beans:bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate"
+		destroy-method="clearCache">
+		<beans:constructor-arg index="0"
+			ref="sqlSessionFactory"></beans:constructor-arg>
+	</beans:bean>
 	
 	
 </beans:beans>

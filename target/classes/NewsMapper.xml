@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="NewsMapper">
+	<insert id = "insertNews" parameterType="vo.NewsVO">
+		<selectKey resultType="_int" keyProperty="id" order="BEFORE">
+			select news_seq.nextval from dual
+		</selectKey>
+		insert into news(id, writer, title, content, writedate, cnt)
+		values(#{id},#{writer},#{title},#{content}, sysdate,#{cnt})
+	</insert>
+	<update id="updateNews" parameterType="vo.NewsVO">
+		update news set writer=#{writer},title=#{title},content=#{content},writedate= sysdate,cnt='0' where id=#{id}
+	</update>
+	<delete id="deleteNews" parameterType="_int">
+		delete from news where id = #{id}
+	</delete>
+	<select id="listAllNews" resultType="vo.NewsVO">
+		select id, writer, title, content, writedate, cnt from news order by id desc
+	</select>
+	<select id="listOneNews" resultType ="vo.NewsVO" parameterType="_int">
+		select * from news where id=#{id}
+	</select>
+	<update id="updateCount" parameterType="_int">
+		update news set cnt = cnt+1 where id = #{id}
+	</update>
+	<select id="listWriterNews" resultType="vo.NewsVO" parameterType="string">
+		select * from news where writer=#{writer} order by id desc
+	</select>
+	<select id = "searchId" parameterType = "string" resultType="vo.NewsVO">
+		select * from news where id like '%'||#{key}||'%'
+	</select>
+	<select id = "searchTitle" parameterType = "string" resultType="vo.NewsVO">
+		select * from news where title like '%'||#{key}||'%'
+	</select>
+	<select id = "searchWriter" parameterType = "string" resultType="vo.NewsVO">
+		select * from news where writer like '%'||#{key}||'%'
+	</select>
+
+</mapper>
