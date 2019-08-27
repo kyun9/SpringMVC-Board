@@ -1,4 +1,4 @@
-# Spring mvc-based news bulletin
+# Spring MVC-Based News Board
 
 <hr>
 
